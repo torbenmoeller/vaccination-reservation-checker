@@ -1,11 +1,14 @@
 import abc
 
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 
 
 class BasePage(object):
     def __init__(self, url):
-        self.driver = webdriver.Firefox()
+        options = Options()
+        options.headless = True
+        self.driver = webdriver.Firefox(options=options)
         self.url = url
 
     def setup(self):
