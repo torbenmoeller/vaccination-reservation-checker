@@ -1,6 +1,10 @@
+from datetime import time
+
 from BasePage import BasePage
 from NurembergPage import NurembergPage
+from Reservation import Reservation
 from SuendersbuehlPage import SuendersbuehlPage
+from win10toast import ToastNotifier
 
 base_url = "https://www.doctolib.de/medizinisches-versorgungszentrum-mvz/nuernberg/mvz-dr-renard-kollegen"
 suendersbuehl_url = base_url + "?pid=practice-159665"
@@ -14,6 +18,12 @@ def process_page(key, base_page: BasePage):
     return key, result
 
 
+def show_toast(key, result):
+    if result is Reservation.available:
+        toaster = ToastNotifier()
+        toaster.show_toast(key, result.value)
+
+
 if __name__ == "__main__":
     page_dic = {
         "Nuremberg": NurembergPage(nuremberg_rul),
@@ -21,3 +31,4 @@ if __name__ == "__main__":
     }
     result_list = [process_page(key, page) for key, page in page_dic.items()]
     [print(key, ':', result.value) for key, result in result_list]
+    [show_toast(key, result) for key, result in result_list]
