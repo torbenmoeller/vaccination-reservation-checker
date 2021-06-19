@@ -15,7 +15,7 @@ def start_run():
 
 
 def start():
-    scheduler.enter(five_seconds, priority, start_run, scheduler)
+    scheduler.enter(five_seconds, priority, start_run)
     scheduler.run()
 
 
